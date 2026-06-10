@@ -242,16 +242,16 @@ function animateFortunePage(pageId) {
     requestAnimationFrame(() => imgFrameEl.classList.add('is-visible'));
   }
 
-  // 1. 運勢タイトル (1.2s)
+  // 1. 運勢タイトル (1.9s)
   addTimer(() => {
     if (titleEl) {
       titleEl.style.transition = 'opacity 0.9s ease-out, transform 0.9s ease-out';
       titleEl.style.opacity    = '1';
       titleEl.style.transform  = 'translateY(0)';
     }
-  }, 1200);
+  }, 1900);
 
-  // 2. ★ 1つずつポップ (2.5s〜、各0.32s間隔)
+  // 2. ★ 1つずつポップ (3.2s〜、各0.32s間隔)
   if (starsEl) {
     const starText = starsEl._starText || '';
     [...starText].forEach((ch, i) => {
@@ -260,15 +260,15 @@ function animateFortunePage(pageId) {
         span.className   = 'star-pop';
         span.textContent = ch;
         starsEl.appendChild(span);
-      }, 2500 + i * 320);
+      }, 3200 + i * 320);
     });
   }
 
-  // 3. メッセージ タイピング (5.0s)
+  // 3. メッセージ タイピング (5.7s)
   if (textEl) {
     addTimer(() => {
       typeMessage(textEl._fullText || '', textEl, 90, 700);
-    }, 5000);
+    }, 5700);
   }
 }
 
@@ -435,7 +435,18 @@ function assignSessionImages() {
 function applySessionImage(pageId) {
   const imgId = PAGE_BEAUTY_IMG[pageId];
   const el = imgId && document.getElementById(imgId);
-  if (el && _sessionImages[pageId]) el.src = _sessionImages[pageId];
+  if (el && _sessionImages[pageId]) {
+    el.onerror = function() {
+      this.onerror = null;
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * FALLBACK_IMAGES.length);
+      } while (FALLBACK_IMAGES.length > 1 && idx === _lastFallbackIndex);
+      _lastFallbackIndex = idx;
+      this.src = FALLBACK_IMAGES[idx];
+    };
+    el.src = _sessionImages[pageId];
+  }
 }
 
 function seededRand(seed) {
