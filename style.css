@@ -811,6 +811,6 @@ html, body {
     pointer-events: none;
     z-index: 0;
     line-height: 1;
-    animation: pawWalk linear infinite;
+    animation: pawWalk steps(12, end) infinite;
   }
 }
