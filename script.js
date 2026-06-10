@@ -674,7 +674,7 @@ document.getElementById('money-next').addEventListener('click', () => showPage('
 // 肉球ポンポン歩きアニメーション（PC表示のみ）
 (function initPaws() {
   if (window.innerWidth < 768) return;
-  const half = 12;
+  const half = 7;
   for (let i = 0; i < half * 2; i++) {
     const paw = document.createElement('div');
     paw.className = 'paw-float';
@@ -684,7 +684,7 @@ document.getElementById('money-next').addEventListener('click', () => showPage('
     const isRight = i >= half;
     paw.style.left = (isRight ? 55 + Math.random() * 45 : Math.random() * 45) + '%';
     paw.style.setProperty('--rot', (Math.random() > 0.5 ? '12deg' : '-12deg'));
-    const duration = 12 + Math.random() * 8;
+    const duration = 20 + Math.random() * 10;
     paw.style.animationDuration = duration + 's';
     // 負の遅延でページ読み込み時から各肉球が途中経過の状態で表示される
     paw.style.animationDelay = (-Math.random() * duration) + 's';
