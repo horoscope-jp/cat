@@ -674,24 +674,20 @@ document.getElementById('money-next').addEventListener('click', () => showPage('
 // 肉球ポンポン歩きアニメーション（PC表示のみ）
 (function initPaws() {
   if (window.innerWidth < 768) return;
-  const steps = 20;
-  const duration = 3.2;
-  for (let i = 0; i < steps; i++) {
+  const half = 12;
+  for (let i = 0; i < half * 2; i++) {
     const paw = document.createElement('div');
     paw.className = 'paw-float';
     paw.textContent = '🐾';
-    const size = 22 + Math.random() * 14;
-    paw.style.fontSize = size + 'px';
-    // 左右交互に配置して歩き足跡パターンを作る
-    const isRight = i % 2 === 0;
-    const col = Math.floor(i / 2);
-    const x = 2 + col * 5 + (isRight ? 2.5 : 0) + (Math.random() - 0.5) * 1.5;
-    const y = 5 + col * 3.5 + (isRight ? 3 : 0) + (Math.random() - 0.5) * 1.5;
-    paw.style.left = Math.min(x, 93) + '%';
-    paw.style.bottom = Math.min(y, 65) + '%';
-    paw.style.setProperty('--rot', (isRight ? '15deg' : '-15deg'));
-    paw.style.animationDuration = (duration + Math.random() * 1.2) + 's';
-    paw.style.animationDelay = (i * (duration / steps) - Math.random() * duration * 0.8) + 's';
+    paw.style.fontSize = (20 + Math.random() * 16) + 'px';
+    // 左ゾーン: 0〜45%、右ゾーン: 55〜100%
+    const isRight = i >= half;
+    paw.style.left = (isRight ? 55 + Math.random() * 45 : Math.random() * 45) + '%';
+    paw.style.setProperty('--rot', (Math.random() > 0.5 ? '12deg' : '-12deg'));
+    const duration = 12 + Math.random() * 8;
+    paw.style.animationDuration = duration + 's';
+    // 負の遅延でページ読み込み時から各肉球が途中経過の状態で表示される
+    paw.style.animationDelay = (-Math.random() * duration) + 's';
     document.body.appendChild(paw);
   }
 })();
